@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hotdog detection</title>
+    <link href="{{ url_for('static', filename='css/my_style.css') }}" rel="stylesheet" type= "text/css">
+</head>
+
+<body>
+    <ul>
+      <li><a href="{{ url_for('home') }}">Art filter</a></li>
+      <li><a href="{{ url_for('hotdog') }}">Hotdog Detection</a></li>
+    </ul>
+    <p>Choose a picture to load</p>
+
+    <input type="file"
+       id="avatar" name="avatar"
+       accept="image/png, image/jpeg">
+
+    <table width="500" height="200" border="0" cellpadding="1" align="center">
+    <tr>
+        <td align="center" valign="center">
+            <img src="https://bowl-me-over.com/wp-content/uploads/2019/10/Halloween-Hot-Dog-Fingers.jpg" alt="description here" />
+            <br />Original Image
+        </td>
+        <td align="center" valign="center">
+            <img src="https://bowl-me-over.com/wp-content/uploads/2019/10/Halloween-Hot-Dog-Fingers.jpg" alt="description here" />
+            <br />Image after treatment
+        </td>
+    </tr>
+    </table>
+
+    <button type="submit" class="button button_submit">Detect the hot-dog(s)</button>
+
+</body>
+
+</html>
