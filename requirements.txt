@@ -15,9 +15,12 @@ Jinja2==2.10.3
 joblib==0.14.1
 MarkupSafe==1.1.1
 numpy==1.18.0
+opencv-python==4.1.2.30
+pypiwin32==223
 python-engineio==3.11.2
 python-socketio==4.4.0
 pytz==2019.3
+pywin32==227
 requests==2.22.0
 scikit-learn==0.22
 scipy==1.4.1
@@ -29,3 +32,4 @@ virtualenv==16.7.9
 websocket-client==0.57.0
 Werkzeug==0.16.0
 wincertstore==0.2
+
