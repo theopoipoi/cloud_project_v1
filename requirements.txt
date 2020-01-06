@@ -5,6 +5,9 @@ Click==7.0
 css==0.1
 docker==4.1.0
 Flask==1.1.1
+flask_restful
+flask_cors
+flask_socketio
 idna==2.8
 itsdangerous==1.1.0
 Jinja2==2.10.3
