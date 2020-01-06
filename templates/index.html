@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <head>
     <meta charset="UTF-8">
@@ -16,16 +17,20 @@
 
     <p>Transform the image in a painting</p>
 
+    <form action="/get_img_paint" method="GET">
+        <button type="submit" class="button button_load">Take a picture</button>
+    </form>
+
     <div class="row">
 
           <div class="column">
-              <form action="/get_image_paint_a" method="post">
+              <form action="/show_paint_a" method="GET">
                 <button type="submit" class="button button_submit">Load the before picture</button>
               </form>
           </div>
 
           <div class="column">
-                <form action="/get_image_paint_b" method="post" class="{{click}}">
+                <form action="/show_paint_b" class="{{click}}" method="GET">
                     <button type="submit" class="button button_submit">Load the after pictures</button>
                 </form>
           </div>

@@ -13,6 +13,7 @@ MarkupSafe==1.1.1
 numpy==1.18.0
 pytz==2019.3
 requests==2.22.0
+opencv-python
 scikit-learn==0.22
 scipy==1.4.1
 six==1.13.0

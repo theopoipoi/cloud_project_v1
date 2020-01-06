@@ -16,16 +16,20 @@
 
     <p>Detect the hot-dog</p>
 
+    <form action="/get_img_hotdog" method="GET">
+        <button type="submit" class="button button_load">Take a picture</button>
+    </form>
+
     <div class="row">
 
           <div class="column">
-              <form action="/get_image_hotdog_a" method="post">
+              <form action="/show_hotdog_a" method="GET">
                 <button type="submit" class="button button_submit">Load the before picture</button>
               </form>
           </div>
 
           <div class="column">
-                <form action="/get_image_hotdog_b" method="post" class="{{click}}">
+                <form action="/show_hotdog_b" method="GET" class="{{click}}">
                     <button type="submit" class="button button_submit">Detect the hot-dog</button>
                 </form>
           </div>

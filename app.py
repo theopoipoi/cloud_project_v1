@@ -3,9 +3,43 @@ from flask import Flask, request, jsonify, render_template
 import pickle
 import requests
 import cv2
+import base64
+from flask_restful import Api
+from flask_cors import CORS
+from flask_socketio import SocketIO
 
 app = Flask(__name__)
-model = pickle.load(open('model.pkl', 'rb'))
+#model = pickle.load(open('model.pkl', 'rb'))
+cors = CORS(app, resources={r"/": {"origins": ""}}) 
+# creating an API object 
+api = Api(app) 
+socketio = SocketIO(app,cors_allowed_origins="*")
+
+@socketio.on('img')
+def handleMessage(msg):
+    print('img')
+    img = from_base64(msg)
+    cv2.imwrite('static/true.jpg',img)
+    
+
+@socketio.on('art')
+def handleMessage(msg):
+    print('art')
+    img = from_base64(msg)
+    cv2.imwrite('static/art.jpg',img)
+    
+@socketio.on('det')
+def handleMessage(msg):
+    print('det')
+    img = from_base64(msg)
+    cv2.imwrite('static/det.jpg',img)
+
+def from_base64(buf):
+    jpg_original = base64.b64decode(buf)
+    jpg_as_np = np.frombuffer(jpg_original, dtype=np.uint8)
+    img = cv2.imdecode(jpg_as_np, flags=1)
+
+    return img
 
 @app.route('/')
 def home():
@@ -15,47 +49,32 @@ def home():
 def hotdog():
     return render_template('hotdog.html', click='no-click')
 
-@app.route('/get_image_hotdog_a',methods=['GET', 'POST'])
-def get_data_hotdog_a():
-    #Picture_request = requests.get('http://127.0.0.1:5000/get_image')
-    #if Picture_request.status_code == 200:
-        #with open("static/image.jpg", 'wb') as f:
-            #f.write(Picture_request.content)
-    return render_template('hotdog.html', original_image='static/image_a.jpg')
+@app.route('/get_img_paint',methods=['GET'])
+def get_img_paint():
+    socketio.emit('getImg','getImg',broadcast=True)
+    return render_template('index.html', click='no-click')
 
-@app.route('/get_image_hotdog_b',methods=['GET', 'POST'])
+@app.route('/get_img_hotdog', methods=['GET'])
+def get_img_hotdog():
+    socketio.emit('getDet','getDet',broadcast=True)    
+    return render_template('hotdog.html', click='no-click')
+
+@app.route('/show_hotdog_a',methods=['GET'])
+def show_hotdog_a():
+    return render_template('hotdog.html', original_image='static/true.jpg')
+
+@app.route('/show_hotdog_b',methods=['GET'])
 def get_data_hotdog_b():
-    return render_template('hotdog.html', original_image='static/image_b.jpg', treated_image='static/image_a.jpg')
+    return render_template('hotdog.html', original_image='static/true.jpg', treated_image='static/det.jpg')
 
-@app.route('/get_image_paint_a',methods=['GET', 'POST'])
+@app.route('/show_paint_a', methods=['GET'])
 def get_data_paint_a():
-    return render_template('index.html', original_image='static/image_b.jpg')
+    return render_template('index.html', original_image='static/true.jpg')
 
-@app.route('/get_image_paint_b',methods=['GET', 'POST'])
+@app.route('/show_paint_b', methods=['GET'])
 def get_data_paint_b():
-    return render_template('index.html', original_image='static/image_b.jpg', treated_image='static/image_a.jpg')
-
-# route http posts to this method
-@app.route('/upload', methods=['POST'])
-def test():
-    r = request
-    # convert string of image data to uint8
-    nparr = np.fromstring(r.data, np.uint8)
-    # decode image
-    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-
-    # do some fancy processing here....
-    #store the image
-    cv2.imwrite('current_picture.jpg', img)
-
-    # build a response dict to send back to client
-    response = {'message': 'image received. size={}x{}'.format(img.shape[1], img.shape[0])
-                }
-    # encode response using jsonpickle
-    response_pickled = jsonpickle.encode(response)
-
-    return Response(response=response_pickled, status=200, mimetype="application/json")
+    return render_template('index.html', original_image='static/true.jpg', treated_image='static/art.jpg')
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=80)
+    socketio.run(app,host="0.0.0.0")
