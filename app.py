@@ -47,7 +47,7 @@ def home():
 
 @app.route('/hotdog/')
 def hotdog():
-    return render_template('hotdog.html', click='no-click')
+    return render_template('recognition.html', click='no-click')
 
 @app.route('/get_img_paint',methods=['GET'])
 def get_img_paint():
@@ -57,15 +57,15 @@ def get_img_paint():
 @app.route('/get_img_hotdog', methods=['GET'])
 def get_img_hotdog():
     socketio.emit('getDet','getDet',broadcast=True)    
-    return render_template('hotdog.html', click='no-click')
+    return render_template('recognition.html', click='no-click')
 
 @app.route('/show_hotdog_a',methods=['GET'])
 def show_hotdog_a():
-    return render_template('hotdog.html', original_image='static/true.jpg')
+    return render_template('recognition.html', original_image='static/true.jpg')
 
 @app.route('/show_hotdog_b',methods=['GET'])
 def get_data_hotdog_b():
-    return render_template('hotdog.html', original_image='static/true.jpg', treated_image='static/det.jpg')
+    return render_template('recognition.html', original_image='static/true.jpg', treated_image='static/det.jpg')
 
 @app.route('/show_paint_a', methods=['GET'])
 def get_data_paint_a():
@@ -77,4 +77,4 @@ def get_data_paint_b():
 
 
 if __name__ == "__main__":
-    socketio.run(app,host="0.0.0.0")
+    socketio.run(app)#,host="0.0.0.0")

@@ -11,10 +11,10 @@
 
     <ul>
       <li><a href="{{ url_for('home') }}">Art filter</a></li>
-      <li><a href="{{ url_for('hotdog') }}">Hotdog Detection</a></li>
+      <li><a href="{{ url_for('hotdog') }}">Objects Detection</a></li>
     </ul>
 
-    <p>Detect the hot-dog</p>
+    <p>Detect up to 20 objects</p>
 
     <form action="/get_img_hotdog" method="GET">
         <button type="submit" class="button button_load">Take a picture</button>
@@ -30,7 +30,7 @@
 
           <div class="column">
                 <form action="/show_hotdog_b" method="GET" class="{{click}}">
-                    <button type="submit" class="button button_submit">Detect the hot-dog</button>
+                    <button type="submit" class="button button_submit">Detect the object(s)</button>
                 </form>
           </div>
 
