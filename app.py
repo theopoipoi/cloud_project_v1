@@ -64,10 +64,11 @@ def get_img_hotdog():
 
 @app.route('/show_hotdog_a',methods=['GET'])
 def show_hotdog_a():
-    img = from_base64(respDet[0])
-    cv2.imwrite('static/true.jpg',img)
-    img = from_base64(respDet[1])
-    cv2.imwrite('static/det.jpg',img)
+    if respDet[0]!='' and respDet[1]!='':
+        img = from_base64(respDet[0])
+        cv2.imwrite('static/true.jpg',img)
+        img = from_base64(respDet[1])
+        cv2.imwrite('static/det.jpg',img)
     return render_template('recognition.html', original_image='static/true.jpg')
 
 @app.route('/show_hotdog_b',methods=['GET'])
@@ -76,10 +77,11 @@ def get_data_hotdog_b():
 
 @app.route('/show_paint_a', methods=['GET'])
 def get_data_paint_a():
-    img = from_base64(respDet[0])
-    cv2.imwrite('static/true.jpg',img)
-    img = from_base64(respArt[1])
-    cv2.imwrite('static/art.jpg',img)
+    if respDet[0]!='' and respArt[1]!='':
+        img = from_base64(respDet[0])
+        cv2.imwrite('static/true.jpg',img)
+        img = from_base64(respArt[1])
+        cv2.imwrite('static/art.jpg',img)
     return render_template('index.html', original_image='static/true.jpg')
 
 @app.route('/show_paint_b', methods=['GET'])
