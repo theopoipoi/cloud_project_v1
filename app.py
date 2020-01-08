@@ -15,24 +15,27 @@ cors = CORS(app, resources={r"/": {"origins": ""}})
 api = Api(app) 
 socketio = SocketIO(app,cors_allowed_origins="*")
 
+respDet=['','','','']
+respArt=['','','','']
+
 @socketio.on('img')
 def handleMessage(msg):
     print('img')
-    img = from_base64(msg)
-    cv2.imwrite('static/true.jpg',img)
+    respDet[0]=msg
+
     
 
 @socketio.on('art')
 def handleMessage(msg):
     print('art')
-    img = from_base64(msg)
-    cv2.imwrite('static/art.jpg',img)
+    respArt[1]=msg
+
     
 @socketio.on('det')
 def handleMessage(msg):
     print('det')
-    img = from_base64(msg)
-    cv2.imwrite('static/det.jpg',img)
+    respDet[1]=msg
+
 
 def from_base64(buf):
     jpg_original = base64.b64decode(buf)
@@ -61,6 +64,10 @@ def get_img_hotdog():
 
 @app.route('/show_hotdog_a',methods=['GET'])
 def show_hotdog_a():
+    img = from_base64(respDet[0])
+    cv2.imwrite('static/true.jpg',img)
+    img = from_base64(respDet[1])
+    cv2.imwrite('static/det.jpg',img)
     return render_template('recognition.html', original_image='static/true.jpg')
 
 @app.route('/show_hotdog_b',methods=['GET'])
@@ -69,6 +76,10 @@ def get_data_hotdog_b():
 
 @app.route('/show_paint_a', methods=['GET'])
 def get_data_paint_a():
+    img = from_base64(respDet[0])
+    cv2.imwrite('static/true.jpg',img)
+    img = from_base64(respArt[1])
+    cv2.imwrite('static/art.jpg',img)
     return render_template('index.html', original_image='static/true.jpg')
 
 @app.route('/show_paint_b', methods=['GET'])
