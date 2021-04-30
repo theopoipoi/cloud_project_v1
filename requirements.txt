@@ -25,7 +25,7 @@ scipy==1.4.1
 six==1.13.0
 sklearn==0.0
 sqlparse==0.3.0
-urllib3==1.25.7
+urllib3==1.25.8
 virtualenv==16.7.9
 websocket-client==0.57.0
 Werkzeug==0.16.0
